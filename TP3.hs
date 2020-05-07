@@ -19,8 +19,6 @@ carolina = Jugador "Carolina" 500 "Accionista" [] [pasarPorElBanco]
 manuel :: Jugador
 manuel = Jugador "Manuel" 500 "Oferente Singular" [] [pasarPorElBanco]
 
-tester :: Jugador
-tester = Jugador "TEST" 800 "Accionista" [("Casa1",50),("Casa2",80),("Casa3",200),("Casa4",800)] []
 ------------------------ACCIONES-------------------------
 pasarPorElBanco :: Accion
 pasarPorElBanco unJugador = unJugador {cantDinero = sumarDinero 40 unJugador, tactica = "Comprador Compulsivo"}
