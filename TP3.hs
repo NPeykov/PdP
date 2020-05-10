@@ -21,13 +21,13 @@ manuel = Jugador "Manuel" 500 "Oferente Singular" [] [pasarPorElBanco, enojarse]
 
 ------------------------ACCIONES-------------------------
 pasarPorElBanco :: Accion
-pasarPorElBanco unJugador = unJugador {cantDinero = sumarDinero 40 unJugador, tactica = "Comprador Compulsivo"}
+pasarPorElBanco unJugador = (sumarDinero 40 unJugador) {tactica = "Comprador Compulsivo"}
 
-sumarDinero :: Int -> Jugador -> Int
-sumarDinero cantidadDinero = (+ cantidadDinero).cantDinero
+sumarDinero :: Int -> Accion
+sumarDinero cantidad unJugador = unJugador {cantDinero = (cantDinero unJugador) + cantidad}
 
 enojarse :: Accion
-enojarse unJugador = unJugador {cantDinero = sumarDinero 50 unJugador, acciones = (acciones unJugador) ++ [gritar]}
+enojarse unJugador = sumarDinero 50 unJugador {acciones = (:) gritar (acciones unJugador)}
 
 gritar :: Accion
 gritar unJugador = unJugador {nombre = "AHHHH" ++ (nombre unJugador)}
@@ -39,24 +39,26 @@ subastar propiedad unJugador
 
 ganoPropiedad :: Jugador -> Propiedad -> Jugador
 ganoPropiedad unJugador propiedad = 
-    unJugador {cantDinero = sumarDinero (-snd propiedad) unJugador, propiedades = (propiedades unJugador) ++ [propiedad]}
+    sumarDinero (-snd propiedad) unJugador {propiedades = (propiedades unJugador) ++ [propiedad]}
 
 cumpleConTacticasRequeridas :: Jugador -> Bool
-cumpleConTacticasRequeridas unJugador = any (== (tactica unJugador)) tacticasRequeridas
+cumpleConTacticasRequeridas unJugador = elem (tactica unJugador) tacticasRequeridas
 
 tacticasRequeridas :: [String]
 tacticasRequeridas = ["Oferente Singular", "Accionista"]
 
 cobrarAlquileres :: Accion
-cobrarAlquileres unJugador = unJugador {cantDinero = sumarDinero (-totalAlquiler unJugador) unJugador}
+cobrarAlquileres unJugador = sumarDinero (-totalAlquiler unJugador) unJugador
 
 totalAlquiler :: Jugador -> Int
-totalAlquiler unJugador = (-10) * (length (propiedadesBaratas unJugador)) + 20 * (length (propiedades unJugador))
+totalAlquiler unJugador = 10 * length (propiedadesBaratas unJugador) + 20 * (totalPropiedades unJugador - length (propiedadesBaratas unJugador))
 
 propiedadesBaratas :: Jugador -> [Propiedad]
 propiedadesBaratas unJugador = filter ((<150).snd) (propiedades unJugador)
 
+totalPropiedades :: Jugador -> Int
+totalPropiedades = length.propiedades
+ 
 pagarAAccionistas :: Accion
-pagarAAccionistas unJugador
-    |tactica unJugador == "Accionista" = unJugador {cantDinero = sumarDinero 200 unJugador}
-    |otherwise = unJugador {cantDinero = sumarDinero (-100) unJugador}
+pagarAAccionistas (Jugador unNombre unaCantDinero "Accionista" unaPropiedad unaAccion) = Jugador unNombre (unaCantDinero + 200) "Accionista" unaPropiedad unaAccion
+pagarAAccionistas unJugador = sumarDinero (-100) unJugador
