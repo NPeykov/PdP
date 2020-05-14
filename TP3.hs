@@ -39,7 +39,7 @@ subastar propiedad unJugador
 
 ganoPropiedad :: Jugador -> Propiedad -> Jugador
 ganoPropiedad unJugador propiedad = 
-    sumarDinero (-snd propiedad) unJugador {propiedades = (propiedades unJugador) ++ [propiedad]}
+    sumarDinero (-snd propiedad) unJugador {propiedades = (:) propiedad (propiedades unJugador)}
 
 cumpleConTacticasRequeridas :: Jugador -> Bool
 cumpleConTacticasRequeridas unJugador = elem (tactica unJugador) tacticasRequeridas
@@ -62,3 +62,29 @@ totalPropiedades = length.propiedades
 pagarAAccionistas :: Accion
 pagarAAccionistas (Jugador unNombre unaCantDinero "Accionista" unaPropiedad unaAccion) = Jugador unNombre (unaCantDinero + 200) "Accionista" unaPropiedad unaAccion
 pagarAAccionistas unJugador = sumarDinero (-100) unJugador
+
+
+hacerBerrinchePor :: Jugador -> Propiedad -> Jugador
+hacerBerrinchePor unJugador propiedad
+    |hacerBerrincheMientras unJugador propiedad = hacerBerrinchePor (berrinche unJugador) propiedad
+    |otherwise = restarValorPropiedadYAgregarPropiedad unJugador propiedad
+
+restarValorPropiedadYAgregarPropiedad :: Jugador -> Propiedad -> Jugador
+restarValorPropiedadYAgregarPropiedad unJugador propiedad = sumarDinero (-snd propiedad) unJugador {propiedades = (:) propiedad (propiedades unJugador)}
+
+hacerBerrincheMientras :: Jugador -> Propiedad -> Bool
+hacerBerrincheMientras unJugador propiedad = cantDinero unJugador < snd propiedad
+
+berrinche :: Accion
+berrinche unJugador = gritar (sumarDinero 10 unJugador) 
+
+ultimaRonda :: Jugador -> Accion
+ultimaRonda unJugador = foldr1 (.) (acciones unJugador)
+
+dineroTotalFinal :: Jugador -> Int
+dineroTotalFinal unJugador = cantDinero ((ultimaRonda unJugador) unJugador)
+
+juegoFinal :: Jugador -> Jugador -> Jugador
+juegoFinal unJugador otroJugador
+  |dineroTotalFinal unJugador > dineroTotalFinal otroJugador = unJugador {cantDinero = dineroTotalFinal unJugador}
+  |otherwise = otroJugador {cantDinero = dineroTotalFinal otroJugador}
