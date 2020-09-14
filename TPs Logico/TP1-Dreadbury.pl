@@ -16,13 +16,16 @@ mata(Alguien, Victima) :-               %Mata alguien a su victima.
     not(masRico(Alguien, Victima)),
     viveEnLaMansion(Alguien).
 
-odia(tiaAgatha, Persona) :-
+odia(Alguien, Persona) :-
     viveEnLaMansion(Persona),
+    esOdiado(Persona, Alguien).          %Odia segun unos criterios.
+
+esOdiado(Persona, tiaAgatha) :-          %Criterios de cada persona, "esOdiado" seria (una persona es odiada si se cumple...)
     Persona \= elCarnicero.
-odia(charles, Persona) :-
-    not(odia(tiaAgatha, Persona)).
-odia(elCarnicero, Persona) :-
-    odia(tiaAgatha, Persona).
+esOdiado(Persona, charles):-
+    not(esOdiado(Persona, tiaAgatha)).
+esOdiado(Persona, elCarnicero) :-
+    esOdiado(Persona, tiaAgatha).
 
 masRico(Persona, tiaAgatha) :-
     viveEnLaMansion(Persona),
@@ -51,9 +54,9 @@ Mostrar las consultas utilizadas para conseguir lo anterior, junto con las respu
 
 %RESPUESTAS:
 
-%Para saber si existe una persona que odia a milhouse se consulta "odia(_, milhouse)." que da como resultado true.
+%Para saber si existe una persona que odia a milhouse se consulta "odia(_, milhouse)." que da como resultado false.
 
-%Consultando "odia(charles, Alguien)" nos dice que charles no odia a nadie
+%Consultando "odia(charles, Alguien)" nos dice que charles odia al carnicero.
 
 %tía Agatha odia a charles y a ella misma. Lo sabemos preguntando "odia(tiaAgatha, Alguien)"
 
@@ -62,6 +65,7 @@ tía Agatha odia a tía Agatha.
 tía Agatha odia a Charles.
 El Carnicero odia a tía Agatha.
 El Carnicero odia a Charles.
+Charles odia al Carnicero.
 */
 
 % Si, sabemos por el punto anterior que si, y lo podemos confirmar consultando "odia(elCarnicero,_)." que devuelve true.
