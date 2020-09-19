@@ -11,21 +11,18 @@ object pamela {
 		return gritoDeVictoria
 	}
 	
-	method cantidadDeElementosEnBotiquin(){
+	method cantidadDeUtilidades(){
 		return botiquin.size()
 	}
 	
-	method ultimoElementoDelBotiquin(){
+	method ultimoElementoDeLasUtilidadesn(){
 		return botiquin.last()
 	}
 	
 	method sacarElemento(elemento){
 		botiquin.remove(elemento)
 	}
-	
-	method reducirEnergia(cantidad){
-		energia -= cantidad
-	}
+
 	
 	method botiquin(){
 		return botiquin
@@ -33,6 +30,10 @@ object pamela {
 	
 	method luchar(enemigo){
 		energia += 400
+	}
+	
+	method serAtacadoPorToro(){
+		energia -= self.cantidadDeUtilidades() * 200
 	}
 }
 
@@ -55,31 +56,32 @@ object pocardo {
 		return gritoDeVictoria
 	}
 	
-	method cantidadDeElementosEnBotiquin(){
+	method cantidadDeUtilidades(){
 		return botiquin.size()
 	}
 	
-	method ultimoElementoDelBotiquin(){
+	method ultimoElementoDeLasUtilidadesn(){
 		return botiquin.last()
 	}
 	
 	method sacarElemento(elemento){
 		botiquin.remove(elemento)
 	}
-	
-	method reducirEnergia(cantidad){
-		energia -= cantidad
-	}
+
 	
 	method luchar(enemigo){ 	
 		energia += 500
+	}
+	
+	method serAtacadoPorTulipan(){
+		energia -= self.energia() / 2
 	}
 }
 
 
 
 object tulipan {
-	const botiquin = ["rastrillo", "maceta", "maceta", "manguera"]
+	const galpon = ["rastrillo", "maceta", "maceta", "manguera"]
 	var energia = 8400
 	const gritoDeVictoria = "Hora de cuidar a las plantas"
 	
@@ -91,43 +93,39 @@ object tulipan {
 		return gritoDeVictoria
 	}
 	
-	method botiquin(){
-		return botiquin
+	method galpon(){
+		return galpon
 	}
 	
-	method reducirEnergia(cantidad){
-		energia -= cantidad
+	method cantidadDeUtilidades(){ 			
+		return galpon.size()
 	}
 	
-	method cantidadDeElementosEnBotiquin(){ 			
-		return botiquin.size()
-	}
-	
-	method ultimoElementoDelBotiquin(){						
-		return botiquin.last()
+	method ultimoElementoDeLasUtilidadesn(){						
+		return galpon.last()
 	}
 	
 	method sacarElemento(elemento){
-		botiquin.remove(elemento)
+		galpon.remove(elemento)
 	}
 	
 	method luchar(enemigo){
-		enemigo.reducirEnergia(enemigo.energia() / 2)
+		enemigo.serAtacadoPorTulipan()
 	}
 	
-	
-	
+	method serAtacadoPorToro(){
+		energia -= self.cantidadDeUtilidades() * 200
+	}
 }
 
 
-
 object toro {
-	const botiquin = #{}
+	const botin = []
 	var energia = 7800
 	const gritoDeVictoria = "No se metan con el toro"
 	
-	method botiquin(){
-		return botiquin
+	method botin(){
+		return botin
 	}
 	
 	method energia(){
@@ -138,26 +136,28 @@ object toro {
 		return gritoDeVictoria
 	}
 	
-	method ultimoElementoDelBotiquin(){
-		return botiquin.last()
+	method ultimoElementoDeLasUtilidadesn(){
+		return botin.last()
 	}
 	
-	method cantidadDeElementosEnBotiquin(){
-		return botiquin.size()
+	method cantidadDeUtilidades(){
+		return botin.size()
 	}
 	
-	method reducirEnergia(cantidad){
-		energia -= cantidad
+	method serAtacadoPorTulipan(){
+		energia -= self.energia() / 2
 	}
 	
 	method luchar(enemigo){
-		enemigo.reducirEnergia(enemigo.cantidadDeElementosEnBotiquin() * 200)
-		self.robar(enemigo, enemigo.ultimoElementoDelBotiquin())
+		enemigo.serAtacadoPorToro()
+		self.robar(enemigo, enemigo.ultimoElementoDeLasUtilidadesn())
 	}
 	
-	method robar(enemigo, elemento){					
-		enemigo.sacarElemento(elemento)
-		botiquin.add(elemento)
+	method robar(enemigo, elemento){
+		if (!botin.contains(elemento)){
+			enemigo.sacarElemento(elemento)
+			botin.add(elemento)
+		}			
 	}
 
 }

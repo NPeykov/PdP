@@ -12,15 +12,10 @@ describe "contexto efecto de lucha de cada personaje" {
 		assert.equals(6100, pocardo.energia())
 	}
 
-	test "test cuando tulipan lucha contra pamela le debe sacar mitad de vida" {
-		tulipan.luchar(pamela)
-		assert.equals(3000, pamela.energia())
-	}
-
 	test "test cuando toro lucha contra pamela le saca energia y le roba cintaDePapel" {
 		toro.luchar(pamela)
 		assert.equals(5200, pamela.energia())
-		assert.that(toro.botiquin().contains("cintaDePapel"))
+		assert.that(toro.botin().contains("cintaDePapel"))
 	}
 
 }

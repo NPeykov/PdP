@@ -4,20 +4,17 @@ object equipos {
 	const equipos = [primerEquipo, segundoEquipo]
 	
 	method pelear(unEquipo, otroEquipo){
-		unEquipo.lucharContra(otroEquipo)
-		otroEquipo.lucharContra(unEquipo)
+		unEquipo.enfrentarseA(otroEquipo)
+		otroEquipo.enfrentarseA(unEquipo)
 	}
 	
 	method equipoGanador(){
 		return equipos.max({unEquipo => unEquipo.energiaTotalDelEquipo()})
 	}
 	
-	method integrantesDelEquipoGanador(){
-		return self.equipoGanador().integrantes()
-	}
 	
 	method gritoDeLosGanadores(){
-		return self.integrantesDelEquipoGanador().map({unIntegrante => unIntegrante.gritoDeVictoria()})
+		return self.equipoGanador().gritosDeVictoria()
 	}
 }
 
@@ -28,21 +25,20 @@ object primerEquipo{
 		return integrantes
 	}
 	
-	method primerPeleador(){
-		return integrantes.first()
+	method enfrentarseA(unEquipo){
+		integrantes.forEach({integrante => unEquipo.lucharContra(integrante)})
 	}
 	
-	method segundoPeleador(){
-		return integrantes.last()
-	}
-	
-	method lucharContra(segundoEquipo){
-		integrantes.forEach({unPersonaje => unPersonaje.luchar(segundoEquipo.primerPeleador())})
-		integrantes.forEach({otroPersonaje => otroPersonaje.luchar(segundoEquipo.segundoPeleador())})
+	method lucharContra(enemigo){
+		integrantes.forEach({integrante => integrante.luchar(enemigo)})
 	}
 	
 	method energiaTotalDelEquipo(){
 		return integrantes.sum({unPersonaje => unPersonaje.energia()})
+	}
+	
+	method gritosDeVictoria(){
+		return integrantes.map({unPersonaje => unPersonaje.gritoDeVictoria()})
 	}
 
 }
@@ -54,20 +50,19 @@ object segundoEquipo{
 		return integrantes
 	}
 	
-	method primerPeleador(){
-		return integrantes.first()
+	method enfrentarseA(unEquipo){
+		integrantes.forEach({integrante => unEquipo.lucharContra(integrante)})
 	}
 	
-	method segundoPeleador(){
-		return integrantes.last()
-	}
-	
-	method lucharContra(primerEquipo){
-		integrantes.forEach({unPersonaje => unPersonaje.luchar(primerEquipo.primerPeleador())})
-		integrantes.forEach({otroPersonaje => otroPersonaje.luchar(primerEquipo.segundoPeleador())})
+	method lucharContra(enemigo){
+		integrantes.forEach({integrante => integrante.luchar(enemigo)})
 	}
 	
 	method energiaTotalDelEquipo(){
 		return integrantes.sum({unPersonaje => unPersonaje.energia()})
+	}
+	
+	method gritosDeVictoria(){
+		return integrantes.map({unPersonaje => unPersonaje.gritoDeVictoria()})
 	}
 }
