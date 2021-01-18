@@ -1,0 +1,22 @@
+import personajes.*
+
+describe "contexto efecto de lucha de cada personaje" {
+
+	test "test despues que pamela lucha debe sumarse 400 de energia" {
+		pamela.luchar(pocardo)
+		assert.equals(6400, pamela.energia())
+	}
+
+	test "test despues que pocardo lucha debe sumarse 500 de energia" {
+		pocardo.luchar(pamela)
+		assert.equals(6100, pocardo.energia())
+	}
+
+	test "test cuando toro lucha contra pamela le saca energia y le roba cintaDePapel" {
+		toro.luchar(pamela)
+		assert.equals(5200, pamela.energia())
+		assert.that(toro.botin().contains("cintaDePapel"))
+	}
+
+}
+

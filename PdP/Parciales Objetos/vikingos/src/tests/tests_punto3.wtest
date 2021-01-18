@@ -1,0 +1,53 @@
+import objetos_recursos_test.*
+
+describe "oro de los vikingos antes de la expedicion 1"{
+	test "la cantidad de oro de vak antes de la espedicion es 2"{
+		assert.equals(2, vak.cantidadDeOro())
+	}
+	test "la cantidad de oro de vok antes de la espedicion es 10"{
+		assert.equals(10, vok.cantidadDeOro())
+	}
+	test "la cantidad de oro de vik antes de la espedicion es 0"{
+		assert.equals(0, vik.cantidadDeOro())
+	}
+}
+
+describe "oro de los vikingos despues de la expedicion 1"{
+	fixture{
+		expedicion1.realizarExpedicion()
+	}
+	
+	test "la cantidad de oro de vak despues de la espedicion es 96"{
+		assert.equals(96, vak.cantidadDeOro())
+	}
+	test "la cantidad de oro de vok despues de la espedicion es 104"{
+		assert.equals(104, vok.cantidadDeOro())
+	}
+	test "la cantidad de oro de vik despues de la espedicion es 94"{
+		assert.equals(94, vik.cantidadDeOro())
+	}
+}
+
+describe "oro de los vikingos despues de la expedicion 1 agregandole dos ciudades mas"{
+	fixture{
+		expedicion1.objetivos().add(otraAldeaAmurallada)
+		expedicion1.objetivos().add(otraCapital)
+		expedicion1.realizarExpedicion()
+	}
+	
+	test "ahora NO vale la pena, pero podes atacarla igual"{
+		assert.notThat(expedicion1.valeLaPena())
+	}
+	
+	test "la cantidad de oro de vak despues de la espedicion es 120"{
+		assert.equals(120, vak.cantidadDeOro())
+	}
+	test "la cantidad de oro de vok despues de la espedicion es 128"{
+		assert.equals(128, vok.cantidadDeOro())
+	}
+	test "la cantidad de oro de vik despues de la espedicion es 118"{
+		assert.equals(118, vik.cantidadDeOro())
+	}
+}
+
+

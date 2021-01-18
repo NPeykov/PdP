@@ -1,0 +1,26 @@
+import objetos_recursos_test.*
+
+describe "testeo para saber si una expedicion vale la pena"{
+	test "la expedicion1 vale la pena"{
+		assert.that(expedicion1.valeLaPena())
+	}
+	
+	test "si cambiamos el botin de la aldea a 14 crucifijos la expedicion no vale la pena"{
+		unaAldea.cantidadDeCrucifijos(14)
+		assert.notThat(expedicion1.valeLaPena())
+	}
+	
+	test "si agregamos 'otraCapital' que no vale la pena a los objetivos la expedicion no vale la pena"{
+		expedicion1.objetivos().add(otraCapital)
+		assert.notThat(expedicion1.valeLaPena())
+	}
+	
+	test "si agregamos 'otraAldeaAmurallada' la expedicion no valdria la pena"{
+		expedicion1.objetivos().add(otraAldeaAmurallada)
+		assert.notThat(expedicion1.valeLaPena())
+	}
+}
+
+
+
+

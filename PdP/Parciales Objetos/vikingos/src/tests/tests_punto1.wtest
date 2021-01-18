@@ -1,0 +1,39 @@
+import objetos_recursos_test.*
+
+describe "se crea un granjero para ver si puede ingresar a las expediciones" {
+
+	test "pepe puede ir a la expedicion"{
+		conquista1.mandarAExpedicion(pepe)
+		assert.equals(1, conquista1.cantidadVikingoParticipantes())
+	}
+	
+	test "si a pepe le damos una espada no puede ir a la expedicion" {
+		pepe.armas(1)
+		assert.throwsExceptionWithMessage("No puede ir", {conquista1.mandarAExpedicion(pepe)})
+	}
+	
+	test "si pepe tiene otro hijo no va a poder ir a la expedicion" {
+		pepe.cantidadDeHijos(4)
+		assert.throwsExceptionWithMessage("No puede ir", {conquista1.mandarAExpedicion(pepe)})
+	}
+}
+
+describe "se crea una soldada para ver si puede ingresar a las expediciones" {
+
+	test "pepa puede ir a la expedicion"{
+		conquista1.mandarAExpedicion(pepa)
+		assert.equals(1, conquista1.cantidadVikingoParticipantes())
+	}
+	
+	test "si a pepa le sacamos la espada NO puede ir a la expedicion" {
+		pepa.armas(0)
+		assert.throwsExceptionWithMessage("No puede ir", {conquista1.mandarAExpedicion(pepa)})
+	}
+	
+	test "si le cambiamos la cantidad de vidas cobradas a 19 NO puede ir" {
+		pepa.vidasCobradas(19)
+		assert.throwsExceptionWithMessage("No puede ir", {conquista1.mandarAExpedicion(pepa)})
+	}
+}
+
+

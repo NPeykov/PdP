@@ -1,0 +1,61 @@
+import objetos_recursos_test.*
+import castas_sociales.*
+
+describe "testeos de ascenso social jarl a karl"{
+	test "antes del ascenso pepe tenia 7 hectareas y 3 hijos"{
+		assert.equals(7, pepe.hectareasDesignadas())
+		assert.equals(3, pepe.cantidadDeHijos())
+	}
+	
+	test "pepe asciende a karl"{
+		pepe.ascenderCastaSocial()
+		assert.equals(karl, pepe.castaSocial())
+	}
+	
+	test "despues del ascenso pepe tiene 9 hectareas y 5 hijos"{
+		pepe.ascenderCastaSocial()
+		assert.equals(9, pepe.hectareasDesignadas())
+		assert.equals(5, pepe.cantidadDeHijos())
+	}
+}
+
+describe "testeos de ascenso social jarl, karl y thrall"{
+	
+	fixture{
+		pepa.serAscendido(jarl)
+	}
+	
+	test "pepa paso a ser jarl"{
+		assert.equals(jarl, pepa.castaSocial())
+	}
+	
+	test "pepa ascendio a karl y gano 10 armas"{
+		pepa.ascenderCastaSocial()
+		assert.equals(11, pepa.armas())
+	}
+	
+	test "pepa ascendio a karl y NO adquirio hijos o tierras"{
+		assert.equals(7, pepa.hectareasDesignadas())
+		assert.equals(3, pepa.cantidadDeHijos())
+	}
+	
+	test "pepa ascendio a thrall"{
+		pepa.ascenderCastaSocial()
+		pepa.ascenderCastaSocial()
+		assert.equals(thrall, pepa.castaSocial())
+	}
+	
+	test "pepa no gano ningun arma ascendiendo a thrall"{
+		pepa.ascenderCastaSocial()
+		pepa.ascenderCastaSocial()
+		assert.equals(11, pepa.armas())
+	}
+	
+	test "pepa seguira siendo thrall aun si se asciende 4 veces"{
+		pepa.ascenderCastaSocial()
+		pepa.ascenderCastaSocial()
+		pepa.ascenderCastaSocial()
+		pepa.ascenderCastaSocial()
+		assert.equals(thrall, pepa.castaSocial())
+	}
+}
