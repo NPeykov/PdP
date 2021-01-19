@@ -3,6 +3,7 @@ import adultos.*
 import accesorios.*
 import legiones.*
 import barrios.*
+import estados.*
 
 const chico1 = new Chicxs(
 	accesorios = [unMaquillaje, unTrajeTerrorifico], 

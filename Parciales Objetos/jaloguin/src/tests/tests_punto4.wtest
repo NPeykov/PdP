@@ -2,11 +2,11 @@ import recursos_tests.*
 
 describe "tests para valores de comer caramelos validos"{
 	test "debe fallar si asigno -2 caramelos para que coma"{
-		assert.throwsExceptionWithMessage("Valor invalido de caramelos", {chico4.comerCaramelos(-2)})
+		assert.throwsExceptionWithMessage("Error al intentar comer caramelos", {chico4.comerCaramelos(-2)})
 	}
 	
 	test "debe fallar si le asigno mas caramelos de los que tiene"{
-		assert.throwsExceptionWithMessage("Valor invalido de caramelos", {chico4.comerCaramelos(6)})
+		assert.throwsExceptionWithMessage("Error al intentar comer caramelos", {chico4.comerCaramelos(6)})
 	}
 	
 	test "tiene 0 caramelos luego de comer 5"{
@@ -20,6 +20,6 @@ describe "tests para valores de comer caramelos validos"{
 	}
 	
 	test "falla al asignarle 0 caramelos"{
-		assert.throwsExceptionWithMessage("Valor invalido de caramelos", {chico4.comerCaramelos(0)})
+		assert.throwsExceptionWithMessage("Error al intentar comer caramelos", {chico4.comerCaramelos(0)})
 	}
 }

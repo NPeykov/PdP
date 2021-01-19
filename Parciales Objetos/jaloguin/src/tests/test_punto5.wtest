@@ -1,0 +1,50 @@
+import recursos_tests.*
+import estados.*
+
+describe "testeos para el estado de salud sano"{
+	
+	test "estando sano puede comer 5 caramelos sin cambiar de estado"{
+		chico1.comerCaramelos(5)
+		assert.equals(sano, chico1.estadoSalud())
+	}
+	
+	test "si come 10 caramelos pasa a estar empachado"{
+		chico1.comerCaramelos(10)
+		assert.equals(empachado, chico1.estadoSalud())
+	}
+	
+	test "si come 10 caramelos baja su actitud a 4"{
+		chico1.comerCaramelos(10)
+		assert.equals(4, chico1.actitud())
+	}
+}
+
+describe "testeos para el estado de salud empachado"{
+	fixture{
+		chico1.recibirCaramelos(200)
+	}
+	
+	test "estando empachado puede comer 5 caramelos sin cambiar de estado"{
+		chico1.comerCaramelos(11) //pasa a estar empachado
+		chico1.comerCaramelos(5)
+		assert.equals(empachado, chico1.estadoSalud())
+	}
+	
+	test "si come 11 caramelos pasa a estar en cama"{
+		chico1.comerCaramelos(10)
+		chico1.comerCaramelos(11)
+		assert.equals(cama, chico1.estadoSalud())
+	}
+	
+	test "si come 10 caramelos baja su actitud a 0"{
+		chico1.comerCaramelos(10)
+		chico1.comerCaramelos(10)
+		assert.equals(0, chico1.actitud())
+	}
+	
+	test "si intenta comer algun caramelo estando en cama tira error"{
+		chico1.comerCaramelos(10) //empachado
+		chico1.comerCaramelos(10) //cama
+		assert.throwsExceptionWithMessage("Error al intentar comer caramelos", {chico1.comerCaramelos(1)})
+	}
+}

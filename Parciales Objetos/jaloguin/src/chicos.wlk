@@ -1,9 +1,31 @@
 import accesorios.*
+import estados.*
 
 class Chicxs {
+	var estadoSalud = sano
 	var accesorios
 	var actitud
 	var caramelos
+	
+	method estadoSalud(nuevoEstadoSalud){
+		estadoSalud = nuevoEstadoSalud
+	}
+	
+	method estadoSalud(){
+		return estadoSalud
+	}
+
+	method reducirActitudALaMitad(){
+		actitud = actitud / 2
+	}
+	
+	method anularActitud(){
+		actitud = 0
+	}
+	
+	method actitud(){
+		return actitud
+	}
 	
 	method accesorios(){
 		return accesorios
@@ -33,9 +55,19 @@ class Chicxs {
 	}
 	
 	method comerCaramelos(cantidad){
-		if(self.caramelos() >= cantidad && cantidad > 0){
+		if(self.esCantidadValidaDeCaramelos(cantidad) && self.puedeComer(cantidad)){
+			if(cantidad >= 10){ estadoSalud.cambiar(self) }
 			caramelos -= cantidad
 		}
-		else throw new Exception (message = "Valor invalido de caramelos")
+		else throw new Exception (message = "Error al intentar comer caramelos")
 	}
+	
+	method esCantidadValidaDeCaramelos(cantidad){
+		return self.caramelos() >= cantidad && cantidad > 0
+	}
+	
+	method puedeComer(cantidad){
+		return estadoSalud.permiteComerCaramelos()
+	}
+	
 }
