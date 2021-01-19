@@ -1,0 +1,48 @@
+import recursos_tests.*
+ 
+ describe "pruebas los 3 que mas caramelos tienen"{
+ 	test "chica3 esta entre los 3 que mas caramelos tienen"{
+ 		assert.that(unBarrio.losTresQueMasCaramelosTienen().contains(chica3))
+ 	}
+ 	test "chica2 esta entre los 3 que mas caramelos tienen"{
+ 		assert.that(unBarrio.losTresQueMasCaramelosTienen().contains(chica2))
+ 	}
+ 	test "chico1 esta entre los 3 que mas caramelos tienen"{
+ 		assert.that(unBarrio.losTresQueMasCaramelosTienen().contains(chico1))
+ 	}
+ 	test "chico4 NO esta entre los 3 que mas caramelos tienen"{
+ 		assert.notThat(unBarrio.losTresQueMasCaramelosTienen().contains(chico4))
+ 	}
+ 	test "si al chico4 le damos 30 caramelos deberia aparecer entre los 3 que mas tienen"{
+ 		chico4.recibirCaramelos(30)
+ 		assert.that(unBarrio.losTresQueMasCaramelosTienen().contains(chico4))
+ 	}
+ 	test "si al chico4 le damos 30 caramelos, el chico1 NO deberia aparecer"{
+ 		chico4.recibirCaramelos(30)
+ 		assert.notThat(unBarrio.losTresQueMasCaramelosTienen().contains(chico1))
+ 	}
+ }
+ 
+ describe "testeos para los accesorios de los que tienen mas de 10 caramelos"{
+ 	test "unMaquillaje deberia aparecer en la lista"{
+ 		assert.that(unBarrio.accesoriosConMasDeDiezCaramelos().contains(unMaquillaje))
+ 	}
+ 	
+ 	test "unTrajeTierno deberia aparecer en la lista"{
+ 		assert.that(unBarrio.accesoriosConMasDeDiezCaramelos().contains(unTrajeTierno))
+ 	}
+ 	
+ 	test "unTrajeTerrorifico deberia aparecer en la lista"{
+ 		assert.that(unBarrio.accesoriosConMasDeDiezCaramelos().contains(unTrajeTerrorifico))
+ 	}
+ 	
+ 	test "otroTrajeTierno NO deberia aparecer en la lista"{
+ 		assert.notThat(unBarrio.accesoriosConMasDeDiezCaramelos().contains(otroTrajeTierno))
+ 	}
+ }
+ 
+ 
+ 
+ 
+ 
+ 

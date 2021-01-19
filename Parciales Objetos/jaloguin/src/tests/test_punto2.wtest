@@ -1,0 +1,38 @@
+import recursos_tests.*
+ 
+ describe "testeos metodos de la legion"{
+ 	test "el nivel de susto de la legion es 107"{
+ 		assert.equals(107, unaLegion.capacidadDeSusto())
+ 	}
+ 	
+ 	test "la cantidad de caramelos de la legion es 67"{
+ 		assert.equals(67, unaLegion.caramelos())
+ 	}
+ 	
+ 	test "el lider la legion seria chico1"{
+ 		assert.equals(chico1, unaLegion.lider())
+ 	}
+ 	
+ 	test "chica2 NO es lider"{
+ 		assert.notEquals(chica2, unaLegion.lider())
+ 	}
+ }
+ 
+ describe "testeos para asustar a unAdultoNormal"{
+ 	test "unaLegion aparece en la lista de adultoNormal"{
+ 		unaLegion.asustar(unAdultoNormal)
+ 		assert.that(unAdultoNormal.chicosQueIntentaronAsustarlo().contains(unaLegion))
+ 	}
+ 	
+ 	test "chica2 NO recibe caramelos despues de asutar al adulto normal"{
+ 		unaLegion.asustar(unAdultoNormal)
+ 		assert.equals(20, chica2.caramelos())
+ 	}
+ 	
+ 	test "chico1 recibe los caramelos, pasando a tener 22"{
+ 		unaLegion.asustar(unAdultoNormal)
+ 		assert.equals(22, chico1.caramelos())
+ 	}
+ }
+ 
+ 
