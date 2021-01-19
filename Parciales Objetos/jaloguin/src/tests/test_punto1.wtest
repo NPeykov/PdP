@@ -1,0 +1,59 @@
+import recursos_tests.*
+
+describe "testeos de sustos para el adulto comun"{
+	test "la capacidad de susto de chico1 deberia ser 64"{
+		assert.equals(64, chico1.capacidadDeSusto())
+	}
+	
+	test "la tolerancia del adulto comun es 20"{
+		assert.equals(20, unAdultoNormal.tolerancia())
+	}
+	
+	test "el chico1 asusta al adulto y recibe 10 caramelos"{
+		chico1.asustar(unAdultoNormal)
+		assert.equals(22, chico1.caramelos())
+	}
+	
+	test "chico4 no puede asustar al adulto, por lo que sigue teniendo 5 caramelos"{
+		chico4.asustar(unAdultoNormal)
+		assert.equals(5, chico4.caramelos())
+	}
+	
+	test "chico4 aparece en la lista del adultoNormal despues de ser asustado"{
+		chico4.asustar(unAdultoNormal)
+		assert.that(unAdultoNormal.chicosQueIntentaronAsustarlo().contains(chico4))
+	}
+}
+
+describe "testeos de sustos para el abuelo"{
+	test "el abuelo tiene 20 de tolerancia"{
+		assert.equals(20, unAbuelo.tolerancia())
+	}
+	
+	test "cuando chico1 asusta al abuelo deberia tener 17 caramelos"{
+		chico1.asustar(unAbuelo)
+		assert.equals(17, chico1.caramelos())
+	}
+	
+	test "chico1 aparece en la lista del abuelo despues de asustarlo"{
+		chico1.asustar(unAbuelo)
+		assert.that(unAbuelo.chicosQueIntentaronAsustarlo().contains(chico1))
+	}
+	
+	test "cuando chico1 lo asusta sube la tolerancia a 30"{
+		chico1.asustar(unAbuelo)
+		assert.equals(30, unAbuelo.tolerancia())
+	}
+}
+
+describe "testeos al adulto necio"{
+	test "chica3 intenta asustar al adulto pero no recibe caramelos"{
+		chica3.asustar(unAdultoNecio)
+		assert.equals(35, chica3.caramelos())
+	}
+	
+	test "chica3 aparece en la lista de gente que intento asustar al adulto necio"{
+		chica3.asustar(unAdultoNecio)
+		assert.that(unAdultoNecio.chicosQueIntentaronAsustarlo().contains(chica3))
+	}
+}
