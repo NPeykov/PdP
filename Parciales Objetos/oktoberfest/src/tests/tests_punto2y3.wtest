@@ -1,0 +1,52 @@
+import recursos_tests.*
+
+describe "testeos persona desea entrar en carpa"{
+	test "el belga desea entrar a carpa con musica"{
+		assert.that(personaBelga.deseaEntrar(unaCarpaConMusica))
+	}
+	
+	test "el belga NO desea entrar a carpa sin musica"{
+		assert.notThat(personaBelga.deseaEntrar(unaCarpaSinMusica))
+	}
+	
+	test "el checo NO desea entrar a carpa sin musica"{
+		assert.notThat(personaCheca.deseaEntrar(unaCarpaConMusica))
+	}
+}
+
+describe "testeos de la carpa"{
+	
+	test "la carpa con musica tiene a la personaBelga en su lista"{
+		personaBelga.entrar(unaCarpaConMusica)
+		assert.that(unaCarpaConMusica.personas().contains(personaBelga))
+	}
+	
+	test "la persona checha no entra a la carpa con musica"{
+		assert.throwsExceptionWithMessage("No le gusta la carpa", {personaCheca.entrar(unaCarpaConMusica)})
+	}
+	
+	test "el aleman no entra a la carpa con musica"{
+		assert.throwsExceptionWithMessage("No le gusta la carpa", {personaAlemana.entrar(unaCarpaConMusica)})
+	}
+}
+
+describe "testeos capacidad de una carpa"{
+	test "la persona belga puede entrar a la carpa con musica"{
+		personaBelga.entrar(unaCarpaConMusica)
+		assert.that(unaCarpaConMusica.personas().contains(personaBelga))
+	}
+	test "la persona alemana NO puede entrar a la carpa sin musica por tema de capacidad"{
+		assert.throwsExceptionWithMessage("No hay capacidad para que ingrese otra persona", {personaAlemana.entrar(unaCarpaSinMusica)})
+	}
+}
+
+describe "testeos de compra de cerveza"{
+	test "la persona belga no tiene ninguna jarra comprada"{
+		assert.equals(0, personaBelga.jarrasCompradas().size())
+	}
+	
+	test "si el belga entra a la carpa con musica compra una jarra de cerveza belga"{
+		personaBelga.entrar(unaCarpaConMusica)
+		assert.that(personaBelga.jarrasCompradas().contains(unaJarraBelga))
+	}
+}
