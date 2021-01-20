@@ -1,4 +1,7 @@
 import carpa.*
+import jarra_cerveza.*
+import persona.*
+import juego.*
 
 
 const unaCervezaBelga = new Cerveza(graduacionAlcohol = 0.07, paisOrigen = "Belgica")
@@ -12,13 +15,23 @@ const unaCarpaConMusica = new CarpaCervecera(
 	personas=#{}, 
 	capacidadLimite = 5, 
 	tieneBandaMusical = true, 
-	jarraCervezaEnVenta = unaJarraBelga
+	jarraCervezaEnVenta = unaJarraBelga,
+	personasConReserva = #{personaBelga, personaAlemana}
 )
+
+const otraCarpaConMusica = new CarpaCervecera(
+	personas=#{personaBelga}, 
+	capacidadLimite = 5, 
+	tieneBandaMusical = true, 
+	jarraCervezaEnVenta = unaJarraFuerte,
+	personasConReserva = #{personaBelga, personaAlemana})
+
 const unaCarpaSinMusica = new CarpaCervecera(
 	personas=#{personaBelga, personaCheca}, 
 	capacidadLimite = 2, 
 	tieneBandaMusical = false, 
-	jarraCervezaEnVenta = unaJarraFuerte
+	jarraCervezaEnVenta = unaJarraFuerte,
+	personasConReserva = #{personaBelga}
 )
 
 const personaAlemana = new Aleman(
@@ -42,3 +55,4 @@ const personaCheca = new Checo(
 	aguante = 15
 )
 
+const unJuego = new Juego(limiteAlcoholRecomendado = 0.20, personasEnElJuego = #{})

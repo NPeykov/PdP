@@ -1,0 +1,45 @@
+import recursos_tests.*
+
+describe "testeos para entrar a los juegos" {
+	test "el aleman no puede jugar unJuego"{
+		assert.throwsExceptionWithMessage("No se recomienda jugar", {personaAlemana.entrar(unJuego)})
+	}
+	
+	test "el belga no puede jugar porque no tomo ninguna cerveza"{
+		assert.throwsExceptionWithMessage("No se recomienda jugar", {personaBelga.entrar(unJuego)})
+	}
+	
+	test "el checo puede jugar porque le da el alcohol en sangre"{
+		personaCheca.entrar(unJuego)
+		assert.that(unJuego.personasEnElJuego().contains(personaCheca))
+	}
+}
+
+describe "testeos para reserva de carpa"{
+	test "el belga puede entrar a la carpa con musica porque tiene reserva"{
+		personaBelga.entrar(unaCarpaConMusica)
+		assert.that(unaCarpaConMusica.personas().contains(personaBelga))
+	}
+
+	test "el checo no puede entrar a otra carpa porque no tiene reserva"{
+		assert.throwsExceptionWithMessage("No puede ingresar a la carpa", {personaCheca.entrar(otraCarpaConMusica)})
+	}
+	
+	test "el aleman no entra a la carpa con musica porque no le gusta"{
+		assert.throwsExceptionWithMessage("No cumplen requisitos atraccion", {personaAlemana.entrar(unaCarpaConMusica)})
+	}
+}
+
+describe "testeos para recibir una cerveza"{
+	test "despues que el belga entro en la carpa con musica compro una cerveza"{
+		personaBelga.entrar(unaCarpaConMusica)
+		assert.that(personaBelga.jarrasCompradas().contains(unaJarraBelga))
+	}
+	
+	test "despues que el belga entro en la carpa se le regalo una cerveza"{
+		personaBelga.entrar(unaCarpaConMusica)
+		assert.equals(2, personaBelga.jarrasCompradas().size())
+	}
+}
+
+

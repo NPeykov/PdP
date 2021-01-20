@@ -22,11 +22,11 @@ describe "testeos de la carpa"{
 	}
 	
 	test "la persona checha no entra a la carpa con musica"{
-		assert.throwsExceptionWithMessage("No le gusta la carpa", {personaCheca.entrar(unaCarpaConMusica)})
+		assert.throwsExceptionWithMessage("No cumplen requisitos atraccion", {personaCheca.entrar(unaCarpaConMusica)})
 	}
 	
 	test "el aleman no entra a la carpa con musica"{
-		assert.throwsExceptionWithMessage("No le gusta la carpa", {personaAlemana.entrar(unaCarpaConMusica)})
+		assert.throwsExceptionWithMessage("No cumplen requisitos atraccion", {personaAlemana.entrar(unaCarpaConMusica)})
 	}
 }
 
@@ -36,7 +36,7 @@ describe "testeos capacidad de una carpa"{
 		assert.that(unaCarpaConMusica.personas().contains(personaBelga))
 	}
 	test "la persona alemana NO puede entrar a la carpa sin musica por tema de capacidad"{
-		assert.throwsExceptionWithMessage("No hay capacidad para que ingrese otra persona", {personaAlemana.entrar(unaCarpaSinMusica)})
+		assert.throwsExceptionWithMessage("No puede ingresar a la carpa", {personaAlemana.entrar(unaCarpaSinMusica)})
 	}
 }
 

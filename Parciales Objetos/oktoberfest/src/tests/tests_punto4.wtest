@@ -1,0 +1,16 @@
+import recursos_tests.*
+ 
+ describe "testeos para los ebrios empedernidos en una carpa"{
+ 	test "en la carpa sin musica no hay ebrios empedernidos"{
+ 		assert.equals(0, unaCarpaSinMusica.cantidadDeEbriosEmpedernidos())
+ 	}
+ 	
+ 	test "en la carpa con musica no hay ebrios empedernidos"{
+ 		assert.equals(0, unaCarpaConMusica.cantidadDeEbriosEmpedernidos())
+ 	}
+ 	
+ 	test "si el belga entra a la una carpa con musica, la carpa tiene un ebrio empedernido"{
+ 		personaBelga.adquirirCerveza(unaJarraBelga)
+ 		assert.equals(1, otraCarpaConMusica.cantidadDeEbriosEmpedernidos())
+ 	}
+ }

@@ -1,15 +1,32 @@
+import jarra_cerveza.*
+
 class CarpaCervecera{
 	var capacidadLimite
 	var tieneBandaMusical
 	var jarraCervezaEnVenta
 	var personas
+	var personasConReserva
 	
 	method recibirPersona(persona){
-		if(personas.size() + 1 > capacidadLimite){
-			throw new Exception (message = "No hay capacidad para que ingrese otra persona")
+		if(self.hayEspacioParaUnoMas() && self.realizoReserva(persona)){
+			personas.add(persona)
+			persona.adquirirCerveza(jarraCervezaEnVenta)
+			self.regalarCervezaGratis(persona)
 		}
-		personas.add(persona)
-		persona.comprarJarraCerveza(jarraCervezaEnVenta)
+		else throw new Exception (message = "No puede ingresar a la carpa")
+	}
+	
+	method hayEspacioParaUnoMas(){
+		return personas.size() + 1 <= capacidadLimite
+	}
+	
+	method realizoReserva(persona){
+		return personasConReserva.contains(persona)
+	}
+	
+	method regalarCervezaGratis(persona){
+		const cervezaGratis = new JarraCerveza(marcaCerveza = jarraCervezaEnVenta.marcaCerveza(), capacidadEnLitros = 0.3)
+		persona.adquirirCerveza(cervezaGratis)
 	}
 	
 	method tieneBandaMusical(){
@@ -24,99 +41,28 @@ class CarpaCervecera{
 		return personas
 	}
 	
-}
-
-
-class JarraCerveza{
-	const marcaCerveza
-	const capacidadEnLitros
+	method personasConReserva(){
+		return personasConReserva
+	}	
 	
-	method aporteAlcohol(){
-		return capacidadEnLitros * marcaCerveza.graduacionAlcohol()
+	method cantidadDeEbriosEmpedernidos(){
+		return personas.filter({persona => persona.esEbrioEmpedernido()}).size()
 	}
 	
-	method tieneOrigenBelgico(){
-		return marcaCerveza.paisOrigen() == "Belgica"
+	method ebriosEmpedernidos(){
+		return personas.filter({persona => persona.esEbrioEmpedernido()})
 	}
 	
-	method superaPorcentajeAlcohol(cantidad){
-		return marcaCerveza.graduacionAlcohol() > cantidad
+	method esDeInteresParaLaPersona(persona){
+		return persona.deseaEntrar(self)
 	}
 }
 
-class Cerveza{
-	const graduacionAlcohol
-	const paisOrigen
-	
-	
-	method paisOrigen(){ return paisOrigen }
-	method graduacionAlcohol(){ return graduacionAlcohol }
-}
 
 
-class Persona{
-	var peso
-	var jarrasCompradas
-	var leGustaMusicaClasica
-	var aguante
-	
-	method jarrasCompradas(){
-		return jarrasCompradas
-	}
-	
-	method estaEbrio(){
-		return self.alcoholEnSangre() * peso > aguante
-	}
-	
-	
-	method alcoholEnSangre(){
-		return jarrasCompradas.sum({cerveza => cerveza.aporteAlcohol()})
-	}
-	
-	method deseaEntrar(carpa){
-		return self.leGustaElTipoDeCerveza(carpa.jarraCervezaEnVenta()) && self.leGustaSuMusica(carpa)
-	}
-	
-	method entrar(carpa){
-		if(self.deseaEntrar(carpa)){
-			carpa.recibirPersona(self)
-		}
-		else throw new Exception (message = ("No le gusta la carpa"))
-	}
-	
-	method leGustaElTipoDeCerveza(tipoCerveza){
-		return true
-	}
-	
-	method leGustaSuMusica(carpa){
-		return carpa.tieneBandaMusical() == leGustaMusicaClasica
-	}
-	
-	method comprarJarraCerveza(jarraCerveza){
-		jarrasCompradas.add(jarraCerveza)
-	}
-	
-}
 
 
-class Belga inherits Persona{
-	
-	override method leGustaElTipoDeCerveza(tipoCerveza){
-		return tipoCerveza.tieneOrigenBelgico()
-	}
-}
 
-class Checo inherits Persona{
-	
-	override method leGustaElTipoDeCerveza(tipoCerveza){
-		return tipoCerveza.superaPorcentajeAlcohol(0.08)
-	}
-}
-
-class Aleman inherits Persona{
-	
-	override method leGustaElTipoDeCerveza(tipoCerveza){ return true }
-}
 
 
 
