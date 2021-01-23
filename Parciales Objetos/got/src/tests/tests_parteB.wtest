@@ -1,0 +1,30 @@
+import personaje.*
+import casa.*
+import acompaniante.*
+
+describe "tests aliadosde los personajes"{
+	test "el lobo hungaro es aliado del stark"{
+		assert.that(personajeStark.aliados().contains(unLoboHungaro))
+	}
+	
+	test "el otro stark es aliado del stark"{
+		assert.that(personajeStark.aliados().contains(otroPersonajeStark))
+	}
+	
+	test "el personaje lannister es aliado del stark"{
+		assert.that(personajeStark.aliados().contains(personajeLannister))
+	}
+}
+
+describe "tests aliados peligrosos"{
+	
+	test "el personaje stark es peligroso porque su conyuge es lannister"{
+		assert.that(personajeStark.esPeligroso())
+	}
+	
+	test "el personaje lannister no es peligroso"{
+		assert.notThat(personajeLannister.esPeligroso())
+	}
+	
+	/* falta hacer la parte que tiene un aliado peligroso */
+}

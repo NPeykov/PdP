@@ -5,6 +5,10 @@ class Casa{
 	const ciudadOrigen
 	var miembros
 	
+	method miembros(){
+		return miembros
+	}
+	
 	method patrimonio(){
 		return patrimonio
 	}
@@ -15,6 +19,10 @@ class Casa{
 	
 	method cantidadDeMiembros(){
 		return miembros.size()
+	}
+	
+	method derrochar(porcentaje){
+		patrimonio = patrimonio * (1 - porcentaje/100)
 	}
 	
 	method permiteCasar(personaje)
