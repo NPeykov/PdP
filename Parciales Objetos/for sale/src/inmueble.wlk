@@ -18,18 +18,24 @@ class Inmueble{
 		if(personaReservada == null && estaDisponible){
 			personaReservada = cliente
 		}
-		else throw new Exception (message = "No esta disponible")
+		else throw new Exception (message = "No se puede reservar")
 	}
 	
 	method concretar(cliente){
-		if(personaReservada == cliente && estaDisponible){
-			
+		if(self.cumpleReserva(cliente) && estaDisponible){
+			estaDisponible = false
 		}
+		else throw new Exception (message = "No se pudo concretar la compra")
+	}
+	
+	method cumpleReserva(cliente){
+		return personaReservada == cliente || personaReservada == null
 	}
 	
 	method valorComision(){
-		return tipoOperacion.comision()
+		return tipoOperacion.comision(self)
 	}
+	
 }
 
 object casa inherits Inmueble{

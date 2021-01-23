@@ -1,0 +1,61 @@
+import personaje.*
+import casa.*
+
+describe "testeos si pueden lograr casamiento"{
+	
+	test "un lannister no se puede casar con un guardia noche"{
+		assert.notThat(personajeLannister.sePuedeCasar(personajeGuardiaNoche))
+	}
+	
+	test "un stark no se puede casar con un lannister"{
+		assert.notThat(personajeStark.sePuedeCasar(personajeLannister))
+	}
+	
+	test "dos personajes stark se pueden casar"{
+		assert.that(personajeStark.sePuedeCasar(otroPersonajeStark))
+	}
+}
+
+describe "testeos realizar casamientos"{
+	
+	test "los personajes starks se pudieron casar"{
+		personajeStark.casarse(otroPersonajeStark)
+		assert.that(personajeStark.conyuges().contains(otroPersonajeStark))
+		assert.that(otroPersonajeStark.conyuges().contains(personajeStark))
+	}
+	
+	test "un personaje lannister casado no se puede casar con otro"{
+		assert.throwsExceptionWithMessage("No se pueden casar", {personajeLannister.casarse(personajeCasadoLannister)})
+	}
+}
+
+describe "testeos casas ricas"{
+	
+	test "lannister es casa rica"{
+		assert.that(lannister.esRica())
+	}
+	
+	test "stark NO es casa rica"{
+		assert.notThat(stark.esRica())
+	}
+	
+	test "guardiaNoche NO es casa rica"{
+		assert.notThat(guardiaNoche.esRica())
+	}
+}
+
+
+describe "testeos patrimonios"{
+	
+	test "el patrimonio de un lannister es 500"{
+		assert.equals(500, personajeLannister.patrimonio())
+	}
+	
+	test "el patrimonio de un stark es 425"{
+		assert.equals(425, personajeStark.patrimonio())
+	}
+	
+	test "el patrimonio del guardia de la noche es 300"{
+		assert.equals(300, personajeGuardiaNoche.patrimonio())
+	}
+}

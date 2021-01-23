@@ -24,3 +24,9 @@ class Venta inherits Operacion{
 	
 }
 
+
+class OperacionConcretada{
+	var empleado
+	var cliente
+	var inmueble
+}

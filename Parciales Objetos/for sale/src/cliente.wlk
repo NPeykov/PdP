@@ -1,6 +1,5 @@
 class Cliente{
 	
-	
 	method reservar(propiedad){
 		propiedad.serReservada(self)
 	}
@@ -9,5 +8,12 @@ class Cliente{
 		propiedad.cocretar(self)
 	}
 	
+}
+
+
+class Empleado{
 	
+	method reservar(inmueble, cliente){
+		inmueble.serReservada(cliente)
+	}
 }
