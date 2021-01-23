@@ -2,6 +2,10 @@ class Fiesta{
 	const lugar
 	const fecha
 	var invitados
+	
+	method puntajeDisfrazDelInvitado(invitado){
+		return invitado.puntajeDisfraz(self)
+	}
 }
 
 
@@ -24,6 +28,10 @@ class Invitado{
 	
 	method estaConformeConSuDisfraz(){
 		return disfraz.puntaje(self) > 10
+	}
+	
+	method puntajeDisfraz(fiesta){
+		return disfraz.puntaje(self, fiesta)
 	}
 }
 
@@ -91,17 +99,22 @@ class Disfraz{
 		return fechaConfeccion
 	}
 
+	method puntaje(invitado, fiesta){
+		return caracteristicas.sum({
+			caracteristica => caracteristica.aportePuntaje(invitado, fiesta)
+		})
+	}
 	
 }
 
 class CaracteristicaDisfraz{
-	method puntaje(invitado)
+	method aportePuntaje(invitado, fiesta)
 }
 
 class DisfrazGracioso inherits CaracteristicaDisfraz{
 	var nivelGracia
 	
-	override method puntaje(invitado){
+	override method aportePuntaje(invitado, fiesta){
 		if(invitado.tieneMenosDe(50)){
 			return nivelGracia * 3
 		}
@@ -112,7 +125,7 @@ class DisfrazGracioso inherits CaracteristicaDisfraz{
 class DisfrazTobara inherits CaracteristicaDisfraz{
 	var fechaCompra
 	
-	override method puntaje(invitado){
+	override method aportePuntaje(invitado, fiesta){
 		return 10 //HACER
 	}
 }
@@ -120,14 +133,14 @@ class DisfrazTobara inherits CaracteristicaDisfraz{
 class DisfrazCareta inherits CaracteristicaDisfraz{
 	var valorDisfrazPersonaje
 	
-	override method puntaje(invitado){
+	override method aportePuntaje(invitado, fiesta){
 		return valorDisfrazPersonaje
 	}
 }
 
 class DisfrazSexy inherits CaracteristicaDisfraz{
 	
-	override method puntaje(invitado){
+	override method aportePuntaje(invitado, fiesta){
 		if(invitado.esSexy()){
 			return 15
 		}
