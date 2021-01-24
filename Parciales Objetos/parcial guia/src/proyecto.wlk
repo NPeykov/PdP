@@ -12,11 +12,9 @@ class Proyecto{
 		return tareas.filter({ tarea => tarea.fechaARealizarse().beetween(unaFecha, otraFecha) })
 	}
 	
-	method superfiePromedioTareas(){
-		return tareas.sum({tarea => tarea.superficieTotalTarea()}) / tareas.size()
+	method superfiePromedio(){
+		return tareas.sum({tarea => tarea.superficieTotal()}) / tareas.size()
 	}
-	
-	
 	
 	method saldoEn(fecha){
 		return presupuesto + self.gananciasACiertaFecha(fecha) - self.costosACiertaFecha(fecha)
@@ -35,15 +33,14 @@ class Proyecto{
 		return self.tareasVigentesHasta(fecha).sum({ tarea => tarea.costoTotal() })
 	}
 	
-	
-	
-	/*method costoTareas(){
-		return tareas.sum({ tarea => tarea.costoTotal() })
+	method sePuedeRealizar(tarea){
+		const presupuestoALaFecha = self.gananciasACiertaFecha(tarea.fechaARealizarse())
+		return tarea.sePuedeHacer(presupuestoALaFecha)
 	}
 	
-	method gananciasTareas(){
-		return tareas.sum({ tarea => tarea.gananciaTotal() })
-	}*/
+	method esCoherente(fecha){
+		return tareas.all({tarea => self.sePuedeRealizar(tarea)})
+	}
 }
 
 

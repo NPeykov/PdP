@@ -3,7 +3,7 @@ import servicios.*
 
 class Tarea{
 	var fechaARealizarse
-	const duracion = 1
+	const duracionEnDias = 1
 	const lugarARealizarse
 	var tareasAnteriores
 	
@@ -11,16 +11,24 @@ class Tarea{
 		return fechaARealizarse
 	}
 	
+	method fechaQueSeRealizo(){
+		return fechaARealizarse.plusDays(duracionEnDias)
+	}
+	
 	method provinciaARealizarse(){
 		return lugarARealizarse.provincia()
 	}
 	
-	method superficieTotalTarea(){
-		return self.superficieTarea() + self.superficieTotalSubTareas()
+	method superficieTotal(){
+		return self.superficie() + self.superficieSubTareas()
 	}
 	
-	method superficieTarea(){
+	method superficie(){
 		return lugarARealizarse.superficie()
+	}
+	
+	method superficieSubTareas(){
+		return tareasAnteriores.sum({ tareaAnterior => tareaAnterior.superficieTotal() })
 	}
 	
 	method costoTotal(){
@@ -31,10 +39,6 @@ class Tarea{
 		return self.ganancia() + self.gananciasSubTareas()
 	}
 	
-	method superficieTotalSubTareas(){
-		return tareasAnteriores.sum({ tareaAnterior => tareaAnterior.superficieTotalTarea() })
-	}
-	
 	method costoSubTareas(){
 		return tareasAnteriores.sum({ tareaAnterior => tareaAnterior.costoTotal() })
 	}
@@ -43,6 +47,35 @@ class Tarea{
 		return tareasAnteriores.sum({ tareaAnterior => tareaAnterior.gananciaTotal() })
 	}
 	
+	method sePuedeHacer(presupuestoALaFecha){
+		return tareasAnteriores.all({ tareaAnterior => tareaAnterior.seHaceAntes(self) })
+	}
+	
+	method seHaceAntes(tarea){
+		return fechaARealizarse < tarea.fechaARealizarse()
+	}
+	////////////////////////////
+	method hojas(){
+		return tareasAnteriores.filter({ tarea => tarea.esHoja() }) //devuelve tarea
+	}
+	
+	method esHoja(){
+		return tareasAnteriores.isEmpty()
+	}
+
+	method tareasHojas(){
+		return self.hojas() + self.hojasDeRamas()
+	}
+	
+	method tareasRamas(){
+		return tareasAnteriores.filter({ tarea => !tarea.esHoja() })
+	}
+	
+	method hojasDeRamas(){
+		return self.tareasRamas().map({ tarea => tarea.tareasHojas() }).asSet()
+	}
+	
+	////////////////////////////
 	method costo(){ return 0 }
 	method ganancia() { return 0 }
 }
@@ -52,6 +85,10 @@ class TareaProduccion inherits Tarea{
 	
 	override method costo(){
 		return servicios.sum({ servicio => servicio.costo() })
+	}
+	
+	override method sePuedeHacer(presupuestoALaFecha){
+		return super(presupuestoALaFecha) && presupuestoALaFecha > 0
 	}
 }
 
@@ -63,4 +100,3 @@ class TareaRecaudacion inherits Tarea{
 	}
 }
 class TareaReuniones inherits Tarea{}
-
