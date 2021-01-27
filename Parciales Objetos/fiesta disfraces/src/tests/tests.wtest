@@ -1,0 +1,81 @@
+import recursos_tests.*
+
+describe "puntajes de un disfraz"{
+	
+	test "el puntaje de unDisfraz es 11"{
+		assert.equals(11, unInvitadoNumerologo.puntajeDisfraz(unaFiesta))
+	}
+	
+	test "el puntaje de otroDisfraz es 9"{
+		assert.equals(9, unInvitadoPretencioso.puntajeDisfraz(unaFiesta))
+	}	
+}
+
+describe "una fiesta es un bodrio"{
+	
+	test "un invitado numerologo esta conforme con su disfraz"{
+		assert.that(unInvitadoNumerologo.estaConformeConSuDisfraz(unaFiesta))
+	}
+	
+	test "un invitado pretencioso esta conforme con su disfraz"{
+		assert.that(unInvitadoPretencioso.estaConformeConSuDisfraz(unaFiesta))
+	}
+	
+	test "unaFiesta NO es un bodrio"{
+		assert.notThat(unaFiesta.esUnBodrio())
+	}
+}
+
+describe "el mejor disfraz de la fiesta"{
+	
+	test "el mejor disfraz es el del pretencioso"{
+		assert.equals(unInvitadoNumerologo, unaFiesta.mejorDisfraz())
+	}
+	
+}
+
+describe "poder entrar a una fiesta"{
+	
+	test "el numerologo no puede entrar a la fiesta"{
+		assert.throwsExceptionWithMessage("No puede ir", { unaFiesta.sumarInvitado(unInvitadoNumerologo) })
+	}
+	
+	test "si sacamos al numerologo y lo hacemos entrar puede hacerlo"{
+		unaFiesta.invitados().remove(unInvitadoNumerologo)
+		unaFiesta.sumarInvitado(unInvitadoNumerologo)
+		assert.that(unaFiesta.invitados().contains(unInvitadoNumerologo))
+	}
+}
+
+describe "tests personas sexies"{
+	test "el numerologo es sexy"{
+		assert.that(unInvitadoNumerologo.esSexy())
+	}
+	
+	test "el pretencioso es sexy"{
+		assert.that(unInvitadoPretencioso.esSexy())
+	}
+}
+
+describe "test conformidad disfraz"{
+	
+	test "el numerologo esta conforme"{
+		assert.that(unInvitadoNumerologo.estaConformeConSuDisfraz(unaFiesta))
+	}
+	test "el pretencioso esta conforme"{
+		assert.that(unInvitadoPretencioso.estaConformeConSuDisfraz(unaFiesta))
+	}
+}
+
+
+describe "tests fiesta inolvidable"{
+	
+	test "la fiesta es inolvidable"{
+		assert.that(unaFiesta.esInolvidable())
+	}
+}
+
+
+
+
+

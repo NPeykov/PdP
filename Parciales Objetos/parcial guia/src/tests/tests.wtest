@@ -1,0 +1,21 @@
+import recursos_tests.*
+
+test "22"{
+	assert.equals(#{}, unaTarea11.tareasHojas())
+}
+test "31"{
+	assert.that(unaTarea11.tareasHojas().contains(unaTarea31))
+}
+test "32"{
+	assert.that(unaTarea11.hojasDeRamas().contains(unaTarea32))
+}
+test "33"{
+	assert.equals(#{}, unaTarea11.hojasDeRamas().asSet())
+}
+
+
+test "testX" {
+
+	assert.equals(#{}, unaTarea11.tareasHojas())
+
+}

@@ -55,24 +55,25 @@ class Tarea{
 		return fechaARealizarse < tarea.fechaARealizarse()
 	}
 	////////////////////////////
-	method hojas(){
-		return tareasAnteriores.filter({ tarea => tarea.esHoja() }) //devuelve tarea
-	}
-	
-	method esHoja(){
-		return tareasAnteriores.isEmpty()
-	}
-
+	/* devuelve por ej: {a;{b;c}}, deberia dar {a;b;c} */
 	method tareasHojas(){
 		return self.hojas() + self.hojasDeRamas()
+	}
+	
+	method hojas(){
+		return tareasAnteriores.filter({ tarea => tarea.esHoja() }) 
+	}
+	
+	method hojasDeRamas(){
+		return self.tareasRamas().map({ tarea => tarea.tareasHojas() })
 	}
 	
 	method tareasRamas(){
 		return tareasAnteriores.filter({ tarea => !tarea.esHoja() })
 	}
 	
-	method hojasDeRamas(){
-		return self.tareasRamas().map({ tarea => tarea.tareasHojas() }).asSet()
+	method esHoja(){
+		return tareasAnteriores.isEmpty()
 	}
 	
 	////////////////////////////
