@@ -43,23 +43,3 @@ const unaTarea33 = new TareaReuniones(
 	fechaARealizarse = new Date(day=16, month=10, year=2016), 
 	lugarARealizarse = unaCiudad, 
 	tareasAnteriores = #{})
-
-test "22"{
-	assert.equals(#{}, unaTarea11.tareasHojas())
-}
-test "31"{
-	assert.that(unaTarea11.tareasHojas().contains(unaTarea31))
-}
-test "32"{
-	assert.that(unaTarea11.tareasHojas().contains(unaTarea32))
-}
-test "33"{
-	assert.that(unaTarea11.tareasHojas().contains(unaTarea33))
-}
-
-
-test "testX" {
-
-	assert.equals(#{unaTarea21}, unaTarea11.tareasRamas())
-
-}
