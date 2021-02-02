@@ -55,7 +55,7 @@ class Personaje{
 		return estaVivo
 	}
 	
-	method matar(){
+	method morir(){
 		estaVivo = false
 	}
 	
@@ -64,14 +64,22 @@ class Personaje{
 	}
 	
 	method tieneAlianzaPeligrosa(){
-		return self.tieneAliadosRicos() || self.tieneConyugesRicos() /*|| self.tieneUnAliadoPeligroso()*/
+		return self.tieneAlianzaRica() || self.tieneUnAliadoPeligroso()
+	}
+	
+	method tieneAlianzaRica(){
+		return self.tieneAliadosRicos() || self.tieneConyugeRico()
+	}
+	
+	method tieneUnAliadoPeligroso(){
+		return self.aliados().any({aliado => aliado.tieneAlianzaRica()})
 	}
 	
 	method tieneAliadosRicos(){
 		return self.aliados().sum({aliado => aliado.patrimonio()}) >= 10000
 	}
 	
-	method tieneConyugesRicos(){
+	method tieneConyugeRico(){
 		if(self.estaSoltero()){ return false }
 		else return conyuges.all({conyuge => conyuge.casa().esRica()})
 	}
@@ -80,9 +88,11 @@ class Personaje{
 		casa.derrochar(porcentaje)
 	}
 	
-	/*method tieneUnAliadoPeligroso(){
-		return self.aliados().any({aliado => aliado.esPeligroso()})
-	}*/
+	method esAliadoDe(personaje){
+		return self.aliados().contains(personaje)
+	}
+	
+	
 }
 
 

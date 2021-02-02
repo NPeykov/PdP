@@ -4,7 +4,7 @@ class Conspiracion{
 	var atacantes
 	
 	method atacanteDeLaCasaMasPobre(){
-		return atacantes.min({ atacante => atacante.patrimonioDeSuCasa() })
+		return atacantes.min({ atacante => atacante.patrimonioCasa() })
 	}
 	
 	method conspirarContraPersonaje(){
@@ -13,7 +13,7 @@ class Conspiracion{
 	}
 	
 	method esTraidor(personaje){
-		personajeObjetivo.aliados().contains(personaje)
+		personajeObjetivo.esAliadoDe(personaje)
 	}
 	
 	method cantidadDeTraidores(){
@@ -21,54 +21,3 @@ class Conspiracion{
 	}
 }
 
-class Atacante{
-	var personalidad
-	
-	method conspirar(atacante, personaje){
-		personalidad.conspirar(atacante, personaje)
-	}
-}
-
-class Personalidad{
-	
-	method conspirar(atacante, personaje)
-}
-
-class Sutil inherits Personalidad{
-	
-	override method conspirar(atacante, personaje){
-		personaje.casarse(atacante)
-	}
-}
-
-class Asesino inherits Personalidad{
-	
-	override method conspirar(atacante, personaje){
-		if(personaje.estaVivo()){
-			personaje.matar()
-		}
-		else throw new Exception (message = "El personaje estaba muerto")
-	}
-}
-
-class AsesinoSutil inherits Asesino{
-	
-	override method conspirar(atacante, personaje){
-		if(personaje.estaSolo()){
-			super(atacante, personaje)
-		}
-	}
-}
-
-class Disipados inherits Personalidad{
-	var porcentajeDerroche
-	
-	override method conspirar(atacante, personaje){
-		personaje.derrocharFortunaCasa(porcentajeDerroche)
-	}
-}
-
-class Miedoso inherits Personalidad{
-	
-	override method conspirar(atacante, personaje){}
-}

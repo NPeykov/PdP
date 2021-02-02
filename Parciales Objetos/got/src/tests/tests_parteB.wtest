@@ -26,5 +26,8 @@ describe "tests aliados peligrosos"{
 		assert.notThat(personajeLannister.esPeligroso())
 	}
 	
-	/* falta hacer la parte que tiene un aliado peligroso */
+	test "si el stark se casa con el lannister, el lannister pasa a ser peligroso"{
+		personajeLannister.conyuges().add(personajeStark)
+		assert.that(personajeLannister.esPeligroso())
+	}
 }
