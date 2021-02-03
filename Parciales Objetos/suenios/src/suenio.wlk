@@ -19,7 +19,7 @@ class Suenio{
 			self.volverseRealidad(persona)
 			estaCumplido = true
 		}
-		throw new Exception (message = "No puede cumplir el sueño.")
+		else throw new Exception (message = "No puede cumplir el sueño.")
 	}
 	
 	method esAmbicioso(){
@@ -46,7 +46,7 @@ class AdoptarHijo inherits Suenio{
 	var cantidad
 	
 	override method validar(persona){
-		return persona.tieneHijo()
+		return !persona.tieneHijo()
 	}
 	
 	override method volverseRealidad(persona){

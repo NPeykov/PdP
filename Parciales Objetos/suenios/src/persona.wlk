@@ -9,6 +9,22 @@ class Persona {
 	var tipoPersona
 	var felicidonios
 	
+	method felicidonios(){
+		return felicidonios
+	}
+	
+	method hijos(){
+		return hijos
+	}
+	
+	method suenios(){
+		return suenios
+	}
+	
+	method carrerasHechas(){
+		return carrerasHechas
+	}
+	
 	method cumplirSuenio(suenio){
 		suenio.serCumplido(self)
 	}
@@ -22,11 +38,11 @@ class Persona {
 	}
 	
 	method aceptaLaburo(sueldo){
-		return sueldoDeseado >= sueldo
+		return sueldoDeseado <= sueldo
 	}
 	
 	method tieneHijo(){
-		return hijos.size() > 0
+		return hijos > 0
 	}
 	
 	method quiereEstudiar(carrera){
@@ -70,11 +86,15 @@ class Persona {
 		return self.sueniosPendientes().sum({suenio => suenio.felicidonios()})
 	}
 	
-	method esAmbicioso(){
+	method esAmbiciosa(){
 		return self.sueniosAmbiciosos() >= 3
 	}
 	
 	method sueniosAmbiciosos(){
 		return suenios.filter({suenio => suenio.esAmbicioso()}).size()
+	}
+	
+	method recibirFelicidonios(cantidad){
+		felicidonios += cantidad
 	}
 }

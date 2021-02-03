@@ -1,0 +1,103 @@
+import recursos_tests.*
+ 
+ describe "test cumplir suenios unaPersona"{
+ 	test "unaPersona no puede cumplir el suenio de recibirseQuimica"{
+ 		assert.throwsExceptionWithMessage("No puede cumplir el sueño.", {unaPersona.cumplirSuenio(recibirseQuimica)})
+ 	}
+ 	
+ 	test "unaPersona puede cumplir el suenio de adoptar 2 hijos y recibe 25 felicidonios"{
+ 		unaPersona.cumplirSuenio(adoptar2)
+ 		assert.equals(225, unaPersona.felicidonios())
+ 	}
+ 	
+ 	test "unaPersona puede cumplir el suenio de adoptar 2 hijos y ahora tiene 2 hijos"{
+ 		unaPersona.cumplirSuenio(adoptar2)
+ 		assert.equals(2, unaPersona.hijos())
+ 	}
+ 	
+ }
+ 
+ describe "test cumplir suenios otraPersona"{
+ 	test "otraPersona tiene pendiente el suenio de conseguir laburo por 25k"{
+ 		assert.that(otraPersona.sueniosPendientes().contains(laburar25k))
+ 	}
+ 	
+ 	test "otraPersona puede cumplir el suenio de laburar por 25k y recibe 70 felicidonios"{
+ 		otraPersona.cumplirSuenio(laburar25k)
+ 		assert.equals(220, otraPersona.felicidonios())
+ 	}
+ 	
+ 	test "otraPersona NO tiene laburar25k en sueños pendientes cuando lo cumple"{
+ 		otraPersona.cumplirSuenio(laburar25k)
+ 		assert.notThat(otraPersona.sueniosPendientes().contains(laburar25k))
+ 	}
+ 	
+ 	test "otraPersona tiene laburar25k en sueños cumplidos cuando lo cumple"{
+ 		otraPersona.cumplirSuenio(laburar25k)
+ 		assert.that(otraPersona.sueniosCumplidos().contains(laburar25k))
+ 	}
+ 	
+ 	test "puede cumplir el sueño de recibirseQuimica"{
+ 		otraPersona.cumplirSuenio(recibirseQuimica)
+ 		assert.that(otraPersona.carrerasHechas().contains("Quimica"))
+ 	}
+ }
+ 
+ describe "test para los sueños multiples"{
+ 	
+ 	test "unaPersona puede cumplir los 3 sueños de sueño multiple"{
+ 		unaPersona.cumplirSuenio(unSuenioMultiple)
+ 		assert.that(unaPersona.sueniosCumplidos().contains(unSuenioMultiple))
+ 	}
+ 	
+ 	test "unaPersona recibio 205 felicidonios despues de realizar el sueño multiple"{
+ 		unaPersona.cumplirSuenio(unSuenioMultiple)
+ 		assert.equals(405, unaPersona.felicidonios())
+ 	}
+ 	
+ 	test "unaPersona tiene 3 hijos despues de realizar el sueño multiple"{
+ 		unaPersona.cumplirSuenio(unSuenioMultiple)
+ 		assert.equals(3, unaPersona.hijos())
+ 	}
+ 	
+ 	test "unaPersona titulo de filosofia despues de realizar el sueño multiple"{
+ 		unaPersona.cumplirSuenio(unSuenioMultiple)
+ 		assert.that(unaPersona.carrerasHechas().contains("Filosofia"))
+ 	}
+ 	
+ 	test "la OTRA persona no puede cumplir el sueño multiple"{
+ 		assert.throwsExceptionWithMessage("No puede cumplir el sueño.", {otraPersona.cumplirSuenio(unSuenioMultiple)})
+ 	}
+ }
+ 
+ describe "tests persona feliz"{
+ 	test "una persona suma 340 de felicidonios pendientes"{
+ 		assert.equals(340, unaPersona.felicidoniosPendientes())
+ 	}
+ 	
+ 	test "una persona NO es feliz"{
+ 		assert.notThat(unaPersona.esFeliz())
+ 	}
+ 	
+ 	test "si una persona cumple el sueño multiple es feliz"{
+ 		unaPersona.cumplirSuenio(unSuenioMultiple)
+ 		assert.that(unaPersona.esFeliz())
+ 	}
+ }
+ 
+ describe "test persona ambiciosa"{
+ 	test "una persona NO es ambiciosa"{
+ 		assert.notThat(unaPersona.esAmbiciosa())
+ 	}
+ 	
+ 	test "si a la persona le sumamos 2 sueños ambiciosos, NO es ambiocioso"{
+ 		unaPersona.suenios().add(adoptarAmbicioso)
+ 		assert.notThat(unaPersona.esAmbiciosa())
+ 	}
+ 	
+ 	test "si a la persona le sumamos 3 sueños ambiciosos, es ambiocioso"{
+ 		unaPersona.suenios().add(adoptarAmbicioso)
+ 		unaPersona.suenios().add(laburarAmbicioso)
+ 		assert.that(unaPersona.esAmbiciosa())
+ 	}
+ }
