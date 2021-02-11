@@ -1,0 +1,55 @@
+import recursos_tests.*
+import bandeja.*
+import persona.*
+
+
+describe"test para pasar elementos"{
+	
+	test "una persona tiene cerveza despues de pedirla"{
+		unaPersona.pedirElemento(otraPersona, "Cerveza")
+		assert.that(unaPersona.elementosCercanos().contains("Cerveza"))
+	}
+	
+	test "otra persona no tiene cerveza cuando se lo piden"{
+		unaPersona.pedirElemento(otraPersona, "Cerveza")
+		assert.notThat(otraPersona.elementosCercanos().contains("Cerveza"))
+	}
+}
+
+describe "test comidas"{
+	
+	test "el vegetariano no puede comer unaBandeja"{
+		assert.throwsExceptionWithMessage("No desea comer esa comida!", {otraPersona.comer(unaBandeja)})
+	}
+	
+	test "unaPersona puede comer la primera vez y su comida aparece en la lista"{
+		unaPersona.comer(unaBandeja)
+		assert.that(unaPersona.comidasIngeridas().contains(unaBandeja))
+	}
+	
+	test "si una persona quiere comer otra vez tira error"{
+		unaPersona.comer(unaBandeja)
+		assert.throwsExceptionWithMessage("No desea comer esa comida!", {unaPersona.comer(unaBandeja)})
+	}
+}
+
+describe "personas pipon"{
+	test "unaPersona es pipon"{
+		assert.that(unaPersona.estaPipon())
+	}
+	
+	test "otraPersna NO es pipon"{
+		assert.notThat(otraPersona.estaPipon())
+	}
+}
+
+describe "tests personas que la pasan bien"{
+	test "person NO la esta pasando bien"{
+		assert.notThat(person.laEstaPasandoBien())
+	}
+	
+	test "cuando person pide algo cambian de lugar cambia con la otra persona"{
+		otraPersona.pedirElemento(person, "Cerveza")
+		assert.that(person.laEstaPasandoBien())
+	}
+}

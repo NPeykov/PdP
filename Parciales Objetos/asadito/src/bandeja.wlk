@@ -1,5 +1,4 @@
 class Bandeja{
-	var nombreComida
 	var calorias
 	var contieneCarne
 	
@@ -10,6 +9,7 @@ class Bandeja{
 	method calorias(){
 		return calorias
 	}
+
 }
 
 
@@ -19,7 +19,7 @@ class CriteriosAlimentacion{
 
 object vegetariano inherits CriteriosAlimentacion{
 	override method deseaComer(comida){
-		return comida.contieneCarne()
+		return !comida.contieneCarne()
 	}
 }
 

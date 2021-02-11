@@ -10,6 +10,14 @@ class Persona{
 		return posicion
 	}
 	
+	method comidasIngeridas(){
+		return comidasIngeridas
+	}
+	
+	method elementosCercanos(){
+		return elementosCercanos
+	}
+	
 	method tieneElementoCerca(elemento){
 		return elementosCercanos.contains(elemento)
 	}
@@ -34,7 +42,7 @@ class Persona{
 		elementosCercanos.forEach({elemento => self.darElemento(elemento, persona)})
 	}
 	
-	method recicibr(elemento){
+	method recibir(elemento){
 		elementosCercanos.add(elemento)
 	}
 	
@@ -50,7 +58,7 @@ class Persona{
 		if(criteriosAlimentacion.deseaComer(comida)){
 			comidasIngeridas.add(comida)
 		}
-		throw new Exception (message = "No desea comer esa comida!")
+		else throw new Exception (message = "No desea comer esa comida!")
 	}
 	
 	method estaPipon(){
