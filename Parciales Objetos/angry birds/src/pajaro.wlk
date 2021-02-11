@@ -14,6 +14,10 @@ class Pajaro{
 	method esFuerte(){
 		return self.fuerza() > 50
 	}
+	
+	method disminuirIra(cantidad){
+		ira -= cantidad
+	}
 }
 
 
@@ -73,6 +77,8 @@ object chuck inherits Pajaro{
 	override method enojarse(){
 		velocidad *= 2
 	}
+	
+	override method disminuirIra(cantidad){} //no le afecta
 }
 
 object matilda inherits Pajaro{
