@@ -3,6 +3,8 @@ class Persona{
 	var posicion
 	var elementosCercanos
 	var criterioPersona
+	var criteriosAlimentacion
+	var comidasIngeridas
 	
 	method posicion(){
 		return posicion
@@ -43,8 +45,28 @@ class Persona{
 	method cambiarPosicion(persona){
 		posicion = persona.posicion()
 	}
+	
+	method comer(comida){
+		if(criteriosAlimentacion.deseaComer(comida)){
+			comidasIngeridas.add(comida)
+		}
+		throw new Exception (message = "No desea comer esa comida!")
+	}
+	
+	method estaPipon(){
+		return comidasIngeridas.any({comida => comida.calorias() > 500})
+	}
+	
+	method laEstaPasandoBien(){
+		return !comidasIngeridas.isEmpty()
+	}
+	
+	method comioCarne(){
+		return comidasIngeridas.any({comida => comida.contieneCarne()})
+	}
 }
 
+//////CRITERIOS
 class CriterioPersona{
 	method pasarElemento(comensal, elemento, persona)
 }
@@ -73,3 +95,34 @@ object normal inherits CriterioPersona{
 		comensal.darElemento(elemento, persona)
 	}
 }
+
+
+
+////PERSONAS
+
+object osky inherits Persona{
+	override method laEstaPasandoBien(){
+		return true
+	}
+}
+
+object moni inherits Persona{
+	override method laEstaPasandoBien(){
+		return super() && posicion == "1@1" 
+	}
+}
+
+object facu inherits Persona{
+	override method laEstaPasandoBien(){
+		return super() && self.comioCarne()
+	}
+}
+
+object vero inherits Persona{
+	override method laEstaPasandoBien(){
+		return super() && elementosCercanos.size() <= 3
+	}
+}
+
+
+
