@@ -18,6 +18,14 @@ class Pajaro{
 	method disminuirIra(cantidad){
 		ira -= cantidad
 	}
+	
+	method puedeDerribar(obstaculo){
+		return self.fuerza() >= obstaculo.resistencia()
+	}
+	
+	method atacar(isla){
+		isla.derribarObstaculo(self)
+	}
 }
 
 

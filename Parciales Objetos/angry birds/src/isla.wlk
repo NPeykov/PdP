@@ -2,7 +2,11 @@ import pajaro.*
 
 class Isla {
 	var pajaros
+	var eventos
 	
+	method pajaros(){
+		return pajaros
+	}
 	
 	method pajarosFuertes(){
 		return pajaros.filter({pajaro => pajaro.esFuerte()})
@@ -12,16 +16,38 @@ class Isla {
 		return self.pajarosFuertes().sum({pajaro => pajaro.fuerza()})
 	}
 	
-	method sesionManejoDeIra(){
-		pajaros.forEach({pajaro => pajaro.disminuirIra(5)})
+	method realizarEvento(evento, cantidadCerdos){
+		evento.realizarse(pajaros, cantidadCerdos)
 	}
 	
-	method invasionPorcina(cerdos){
-		var cantidadCerdos = cerdos
-		if(cantidadCerdos > 100){
-			cantidadCerdos -= 100
-			pajaros.forEach({pajaro => pajaro.enojarse()})
-			self.invasionPorcina(cantidadCerdos)
-		}
+	method atacar(isla){
+		pajaros.forEach({pajaro => pajaro.atacar(isla)})
+	}
+	
+	method recuperaronHuevos(isla){
+		self.atacar(isla)
+		return isla.noQuedanObstaculos()
 	}
 }
+
+class IslaPorcina{
+	var obstaculos
+	
+	method obstaculosEnPie(){
+		return obstaculos.filter({obstaculo => obstaculo.estaEnPie()})
+	}
+	
+	method primerObstaculoEnPie(){
+		return self.obstaculosEnPie().first()
+	}
+	
+	method derribarObstaculo(pajaro){
+		self.primerObstaculoEnPie().serAtacado(pajaro)
+	}
+	
+	method noQuedanObstaculos(){
+		return obstaculos.isEmpty()
+	}
+}
+
+
