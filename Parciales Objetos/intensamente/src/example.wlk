@@ -3,7 +3,6 @@ object riley {
 	var felicidad = 1000
 	var emocionDominante
 	var recuerdosDelDia
-	var recuerdosAsentados
 	
 	method vivirEvento(unEvento, descripcionEvento){
 		const recuerdo = new Recuerdo(
@@ -17,9 +16,7 @@ object riley {
 	}
 	
 	method asentarRecuerdo(recuerdo){
-		if(recuerdo.esCentralizado(self)){
-			recuerdosAsentados.add(recuerdo)
-		}
+		recuerdo.asentarse(self)
 	}
 	
 	method disminuirFelicidad(porcentaje){
@@ -30,12 +27,11 @@ object riley {
 		else felicidad = nuevaFelicidad
 	}
 	
-	method pensamientosCentrales(){ //no entendi bien la diferencia entre pensamientos asentados 
-		return recuerdosAsentados   //y centrales, se supuso que es lo mismo.
-	}								//otra opcion es manejar un booleano en recuerdo, asi solo se tendria
-									//una lista de recuerdos en vez de 2.
+	method pensamientosCentrales(){ 
+		return recuerdosDelDia.filter({recuerdo => recuerdo.esRecuerdoCentral()})   
+	}								
 	method pensamientosCentralesDificilesDeExplicar(){
-		return recuerdosAsentados.esDificilDeExplicar()
+		return self.pensamientosCentrales().filter({recuerdo => recuerdo.esDificilDeExplicar()})
 	}
 }
 
@@ -44,9 +40,18 @@ class Recuerdo{
 	var descripcion
 	var fecha
 	var emocionActual
+	var esRecuerdoCentral = false
 	
-	method esCentralizado(persona){
-		return emocionActual.seCentraliza(self, persona)
+	method esRecuerdoCentral(){
+		return esRecuerdoCentral
+	}
+	
+	method centralizar(){
+		esRecuerdoCentral = true
+	}
+	
+	method asentarse(persona){
+		return emocionActual.asentarRecuerdo(self, persona)
 	}
 	
 	method esDificilDeExplicar(){
@@ -55,19 +60,21 @@ class Recuerdo{
 }
 
 class Emocion{
-	method seCentraliza(recuerdo, persona){ return false }
+	method asentarRecuerdo(recuerdo, persona){}
 }
 
 object alegre inherits Emocion{
 	
-	override method seCentraliza(recuerdo, persona){
-		return persona.felicidad() > 500
+	override method asentarRecuerdo(recuerdo, persona){
+		if(persona.felicidad() > 500){
+			recuerdo.centralizar()
+		}
 	}
 }
 
 object triste inherits Emocion{
-	override method seCentraliza(recuerdo, persona){
+	override method asentarRecuerdo(recuerdo, persona){
 			persona.disminuirFelicidad(10)
-			return true
+			recuerdo.centralizar()
 	}
 }
