@@ -20,7 +20,7 @@ class Pajaro{
 	}
 	
 	method puedeDerribar(obstaculo){
-		return self.fuerza() >= obstaculo.resistencia()
+		return self.fuerza() > obstaculo.resistencia()
 	}
 	
 	method atacar(isla){

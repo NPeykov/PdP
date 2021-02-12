@@ -1,0 +1,72 @@
+import recursos_tests.*
+
+describe "tests fuerza pajaros"{
+	test "la fuerza de terence2 debe ser 40"{
+		assert.equals(40, terence2.fuerza())
+	}
+	
+	test "la fuerza de matilda2 debe ser 52"{
+		assert.equals(52, matilda2.fuerza())
+	}
+}
+
+describe "tests enojos"{
+	test "cuando matilda se enoja pone un huevo de 2 kg"{
+		matilda2.enojarse()
+		assert.equals(2, matilda2.huevos().last().pesoEnKg())
+	}
+}
+
+describe "pajaros fuertes de una isla"{
+	
+	test "unPajaro es fuerte"{
+		assert.that(unPajaro.esFuerte())
+	}
+	
+	test "matilda2 es un pajaro fuerte de la isla"{
+		assert.that(unaIsla.pajarosFuertes().contains(matilda2))
+	}
+	
+	test "unPajaro es un pajaro fuerte de la isla"{
+		assert.that(unaIsla.pajarosFuertes().contains(unPajaro))
+	}
+	
+	test "la suma de los pajaros fuertes es 108"{
+		assert.equals(108, unaIsla.fuerzaIsla())
+	}
+}
+
+describe "testeos invacion porcina"{
+	test "tests matilda2 se enoja 3 veces, por lo que tiene 3 huevos mas"{
+		unaInvacionPorcina.realizarse(unaIsla)
+		assert.equals(8, matilda2.huevos().size())
+	}
+}
+
+describe "testeos obstaculos"{
+	test "matilda2 puede derribar obstaculoObrero"{
+		obstaculoObrero.serAtacado(matilda2)
+		assert.notThat(obstaculoObrero.estaEnPie())
+	}
+	
+	test "unPajaro puede derribar cerditoArmado"{
+		assert.that(unPajaro.puedeDerribar(cerditoArmado))
+	}
+	
+	test "terence2 no puede derribar cerditoArmado"{
+		assert.notThat(terence2.puedeDerribar(cerditoArmado))
+	}
+}
+
+describe "tests recuperar huevos"{
+	test "si la isla porcina no tiene obstaculos tira error avisando que no tiene obstaculos"{
+		unaIslaPorcina.obstaculos().remove(cerditoArmado)
+		unaIslaPorcina.obstaculos().remove(obstaculoObrero)
+		assert.throwsExceptionWithMessage("No hay obstaculos!", {unaIsla.atacar(unaIslaPorcina)})
+	}
+	
+	test "si unaisla ataca a la isla porcina se queda sin obstaculos"{
+		unaIsla.atacar(unaIslaPorcina)
+		assert.that(unaIslaPorcina.noQuedanObstaculos())
+	}
+}

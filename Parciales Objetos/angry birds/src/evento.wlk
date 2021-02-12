@@ -1,21 +1,22 @@
 class Evento {
 	
-	method realizarse(pajaros, cerdos)
+	method realizarse(isla)
 }
 
 class ManejoDeIra inherits Evento{
-	override method realizarse(pajaros, cerdos){
-		pajaros.forEach({pajaro => pajaro.disminuirIra(5)})
+	override method realizarse(isla){
+		isla.pajaros().forEach({pajaro => pajaro.disminuirIra(5)})
 	}
 }
 
 class InvacionPorcina inherits Evento{
-	override method realizarse(pajaros, cerdos){
-		var cantidadCerdos = cerdos
-		if(cantidadCerdos > 100){
+	var cantidadCerdos
+	
+	override method realizarse(isla){
+		if(cantidadCerdos >= 100){
 			cantidadCerdos -= 100
-			pajaros.forEach({pajaro => pajaro.enojarse()})
-			self.realizarse(pajaros, cantidadCerdos)
+			isla.pajaros().forEach({pajaro => pajaro.enojarse()})
+			self.realizarse(isla)
 		}
 	}
 }
@@ -23,7 +24,7 @@ class InvacionPorcina inherits Evento{
 class EventosDesafortunados inherits Evento{
 	var eventos
 	
-	override method realizarse(pajaros, cerdos){
-		eventos.forEach({evento => evento.realizarse(pajaros, cerdos)})	
+	override method realizarse(isla){
+		eventos.forEach({evento => evento.realizarse(isla)})	
 	}
 }

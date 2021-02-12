@@ -16,8 +16,8 @@ class Isla {
 		return self.pajarosFuertes().sum({pajaro => pajaro.fuerza()})
 	}
 	
-	method realizarEvento(evento, cantidadCerdos){
-		evento.realizarse(pajaros, cantidadCerdos)
+	method realizarEvento(evento){
+		evento.realizarse(pajaros)
 	}
 	
 	method atacar(isla){
@@ -33,6 +33,10 @@ class Isla {
 class IslaPorcina{
 	var obstaculos
 	
+	method obstaculos(){
+		return obstaculos
+	}
+	
 	method obstaculosEnPie(){
 		return obstaculos.filter({obstaculo => obstaculo.estaEnPie()})
 	}
@@ -42,11 +46,14 @@ class IslaPorcina{
 	}
 	
 	method derribarObstaculo(pajaro){
+		if(obstaculos.isEmpty()){
+			throw new Exception (message = "No hay obstaculos!")
+		}
 		self.primerObstaculoEnPie().serAtacado(pajaro)
 	}
 	
 	method noQuedanObstaculos(){
-		return obstaculos.isEmpty()
+		return self.obstaculosEnPie().isEmpty()
 	}
 }
 
