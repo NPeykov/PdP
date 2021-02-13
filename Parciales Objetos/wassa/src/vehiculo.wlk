@@ -11,12 +11,20 @@ class Vehiculo{
 		return capacidadTanque - combustible
 	}
 	
-	method recorrer(kilometros){
-		self.consumirCombustible(2)
+	method cargarCombustible(litros){
+		combustible += litros
 	}
 	
-	method consumirCombustible(cantidad){
-		combustible -= cantidad
+	method recorrer(kilometros){
+		const consumoViaje = self.consumoViaje(kilometros)
+		if(consumoViaje > combustible){
+			throw new Exception (message = "No tiene combustible suficiente")
+		}
+		else combustible -= consumoViaje
+	}
+	
+	method consumoViaje(kilometros){
+		return 2
 	}
 	
 	method esEcologico()
@@ -27,9 +35,8 @@ object camioneta inherits Vehiculo{
 	
 	override method esEcologico(){ return false }
 	
-	override method recorrer(kilometros){
-		const combustibleConsumido = 4 + 5 * kilometros
-		self.consumirCombustible(combustibleConsumido)
+	override method consumoViaje(kilometros){
+		return 4 + 5 * kilometros
 	}
 }
 
@@ -39,9 +46,8 @@ object deportivo inherits Vehiculo{
 		return velocidadPromedio < 120
 	}
 	
-	override method recorrer(kilometros){
-		super(kilometros)
-		self.consumirCombustible(0.2)
+	override method consumoViaje(kilometros){
+		return super(kilometros) + 0.2
 	}
 }
 

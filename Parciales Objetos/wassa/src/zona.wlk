@@ -29,7 +29,7 @@ class Control{
 	method multar(usuario)
 }
 
-class Velocidad inherits Control{
+object Velocidad inherits Control{
 	
 	override method pasaControl(usuario, zona){
 		return usuario.velocidadDelVehiculo() <= zona.velocidadPermitida() 
@@ -40,7 +40,7 @@ class Velocidad inherits Control{
 	}
 }
 
-class Ecologico inherits Control{
+object Ecologico inherits Control{
 	
 	override method pasaControl(usuario, zona){
 		return usuario.tieneAutoEcologico()
@@ -51,8 +51,7 @@ class Ecologico inherits Control{
 	}
 }
 
-class Regulatorio inherits Control{
-	var fecha
+object Regulatorio inherits Control{
 	
 	override method pasaControl(usuario, zona){
 		return usuario.tieneDocumentoPar() && self.esFechaPar()
@@ -60,7 +59,7 @@ class Regulatorio inherits Control{
 	}
 	
 	method esFechaPar(){
-		return fecha.day().even()
+		return new Date().day().even()
 	}
 	
 	override method multar(usuario){

@@ -12,9 +12,10 @@ class Usuario{
 	}
 	
 	method recargarCombustible(litrosCombustible){
-		const precioCombustible = vehiculo.combustibleFaltante().min(litrosCombustible) * 40
-		if(self.puedePagar(precioCombustible)){
-			dinero -= precioCombustible
+		const combustibleNecesario = vehiculo.combustibleFaltante().min(litrosCombustible)
+		if(self.puedePagar(combustibleNecesario * 40)){
+			dinero -= combustibleNecesario * 40
+			vehiculo.cargarCombustible(combustibleNecesario)
 		}
 		else throw new Exception (message = "No puede cargar esa cantidad de nafta!")
 	}
@@ -25,8 +26,10 @@ class Usuario{
 	
 	method pagarMulta(multa){
 		if(self.puedePagar(multa.costo())){
+			dinero -= multa.costo()
 			multa.pagarse()
 		}
+		else multa.aumentarCosto(10)
 	}
 	
 	method pagarMultas(){
@@ -47,7 +50,8 @@ class Usuario{
 	}
 	
 	method tieneDocumentoPar(){
-		return dni.last().even()
+		const numerosPares = "02468"
+		return numerosPares.contains(dni.last())
 	}
 	
 	method multasPendientes(){

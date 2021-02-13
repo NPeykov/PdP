@@ -13,4 +13,8 @@ class Multa{
 	method costo(){
 		return costo
 	}
+	
+	method aumentarCosto(porcentaje){
+		costo += costo * porcentaje/100
+	}
 }
