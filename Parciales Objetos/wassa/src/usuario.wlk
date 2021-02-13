@@ -65,4 +65,8 @@ class Usuario{
 	method estaComplicado(){
 		return self.valorMultasPendientes() > 5000
 	}
+	
+	method puedeSalir(){
+		return self.tieneDocumentoPar() == new Date().day().even()
+	}
 }

@@ -54,13 +54,9 @@ object Ecologico inherits Control{
 object Regulatorio inherits Control{
 	
 	override method pasaControl(usuario, zona){
-		return usuario.tieneDocumentoPar() && self.esFechaPar()
-			|| !usuario.tieneDocumentoPar() && !self.esFechaPar()
+		return !usuario.puedeSalir()
 	}
 	
-	method esFechaPar(){
-		return new Date().day().even()
-	}
 	
 	override method multar(usuario){
 		usuario.serMultado(2000)
