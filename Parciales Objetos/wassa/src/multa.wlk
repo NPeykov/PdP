@@ -2,7 +2,11 @@ class Multa{
 	var costo
 	var estaPago = false
 	
-	method serPagada(){
+	method estaPago(){
+		return estaPago
+	}
+	
+	method pagarse(){
 		estaPago = true
 	}
 	

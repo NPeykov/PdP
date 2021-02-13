@@ -25,7 +25,40 @@ class Usuario{
 	
 	method pagarMulta(multa){
 		if(self.puedePagar(multa.costo())){
-			multa.serPagada()
+			multa.pagarse()
 		}
+	}
+	
+	method pagarMultas(){
+		multas.forEach({ multa => self.pagarMulta(multa) })
+	}
+	
+	method velocidadDelVehiculo(){
+		return vehiculo.velocidadPromedio()
+	}
+	
+	method tieneAutoEcologico(){
+		return vehiculo.esEcologico()
+	}
+	
+	method serMultado(valorMulta){
+		const nuevaMulta = new Multa(costo = valorMulta)
+		multas.add(nuevaMulta)
+	}
+	
+	method tieneDocumentoPar(){
+		return dni.last().even()
+	}
+	
+	method multasPendientes(){
+		return multas.filter({ multa => !multa.estaPago() })
+	}
+	
+	method valorMultasPendientes(){
+		return self.multasPendientes().sum({ multa => multa.costo() })
+	}
+	
+	method estaComplicado(){
+		return self.valorMultasPendientes() > 5000
 	}
 }
